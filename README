@@ -1,0 +1,10 @@
+This plugin provides one command :Tjumps that lets users filter and select 
+items from the jump list.
+
+
+-----------------------------------------------------------------------
+
+Status:  Experimental
+Install: See http://github.com/tomtom/vimtlib/blob/master/INSTALL.TXT
+See http://github.com/tomtom for related plugins.
+
