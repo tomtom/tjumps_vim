@@ -3,7 +3,7 @@
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2011-04-17.
 " @Last Change: 2011-04-17.
-" @Revision:    36
+" @Revision:    46
 
 
 if !exists('g:tjumps#params') "{{{2
@@ -16,14 +16,17 @@ if !exists('g:tjumps#params') "{{{2
 endif
 
 
-function! tjumps#Jumps(filter) "{{{3
+function! tjumps#Jumps(filter, ...) "{{{3
+    let reverse_filter = a:0 >= 1 ? a:1 : 0
     redir => jumpss
     silent jumps
     redir END
     let jumps = split(jumpss, '\n')
     call remove(jumps, 0)
     if !empty(a:filter)
-        call filter(jumps, 'v:val =~ ''\%16c''. a:filter')
+        let expr = reverse_filter ? 'strpart(v:val, 16) !~ a:filter' : 'strpart(v:val, 16) =~ a:filter'
+        TLogVAR reverse_filter, expr
+        call filter(jumps, expr)
         " let jumps = map(jumps, 'matchlist(v:val, ''^\s*\(\d\+\)\s+\(\d\+\)\s+\(\d\+\)\s+\(.*\)$'')')
     endif
     let d = copy(g:tjumps#params)
@@ -41,13 +44,6 @@ function! tjumps#DoJump(world, selected) "{{{3
         let ml = matchlist(jump, '^\s*\(\d\+\)\s\+\(\d\+\)\s\+\(\d\+\)\s\+\(.*\)$')
         " TLogVAR ml
         exec 'norm! '. ml[1] ."\<c-o>"
-        " let line = getline(lnum)
-        " if strpart(line, 0, len(filetext)) ==# filetext
-        "     call cursor(lnum, col)
-        " elseif filereadable(filetext)
-        "     call
-        " else
-        " endif
     endif
 endf
 
