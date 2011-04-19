@@ -3,7 +3,7 @@
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2011-04-17.
 " @Last Change: 2011-04-19.
-" @Revision:    48
+" @Revision:    49
 
 
 if !exists('g:tjumps#params') "{{{2
@@ -27,7 +27,7 @@ function! tjumps#Jumps(filter, ...) "{{{3
     call remove(jumps, 0)
     if !empty(a:filter)
         let expr = reverse_filter ? 'strpart(v:val, 16) !~ a:filter' : 'strpart(v:val, 16) =~ a:filter'
-        TLogVAR reverse_filter, expr
+        " TLogVAR reverse_filter, expr
         call filter(jumps, expr)
         " let jumps = map(jumps, 'matchlist(v:val, ''^\s*\(\d\+\)\s+\(\d\+\)\s+\(\d\+\)\s+\(.*\)$'')')
     endif
