@@ -2,8 +2,8 @@
 " @Author:      Tom Link (mailto:micathom AT gmail com?subject=[vim])
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2011-04-17.
-" @Last Change: 2011-04-17.
-" @Revision:    46
+" @Last Change: 2011-04-19.
+" @Revision:    48
 
 
 if !exists('g:tjumps#params') "{{{2
@@ -22,6 +22,8 @@ function! tjumps#Jumps(filter, ...) "{{{3
     silent jumps
     redir END
     let jumps = split(jumpss, '\n')
+    call remove(jumps, 0)
+    call reverse(jumps)
     call remove(jumps, 0)
     if !empty(a:filter)
         let expr = reverse_filter ? 'strpart(v:val, 16) !~ a:filter' : 'strpart(v:val, 16) =~ a:filter'
